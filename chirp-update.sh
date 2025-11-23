@@ -1,8 +1,51 @@
 #!/bin/bash
 # ------------------------------------------------------
-# CHIRP Auto-Update Script
+# CHIRP auto-update script
 # By Dennis de Koster
 # ------------------------------------------------------
+
+# --------------------------------------------------
+# Check for pipx and offer to install it if missing
+# --------------------------------------------------
+if ! command -v pipx >/dev/null 2>&1; then
+    echo "❌ pipx not found – this script needs pipx to install/upgrade CHIRP."
+    echo
+    echo "pipx is the recommended way to install Python applications in isolation."
+    echo
+    read -p "Do you want to install pipx automatically? (y/N): " -n 1 -r REPLY
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        echo "Installing pipx..."
+        if command -v apt-get >/dev/null 2>&1; then
+            sudo apt-get update && sudo apt-get install -y pipx
+        elif command -v dnf >/dev/null 2>&1; then
+            sudo dnf install -y pipx
+        elif command -v pacman >/dev/null 2>&1; then
+            sudo pacman -Sy --noconfirm pipx
+        elif command -v zypper >/dev/null 2>&1; then
+            sudo zypper install -y pipx
+        else
+            echo "Unsupported package manager. Please install pipx manually:"
+            echo "    python3 -m pip install --user pipx"
+            echo "    python3 -m pipx ensurepath"
+            exit 1
+        fi
+
+        # Ensure pipx is in PATH for the current session
+        export PATH="$HOME/.local/bin:$PATH"
+        echo "pipx installed successfully!"
+        echo
+    else
+        echo "pipx is required. Aborting."
+        echo "Install it manually with:"
+        echo "    python3 -m pip install --user pipx"
+        echo "    python3 -m pipx ensurepath"
+        exit 1
+    fi
+fi
+# Ensure pipx binaries are in PATH (very important for fresh installs)
+export PATH="$HOME/.local/bin:$PATH"
+
 DOWNLOAD_DIR="$HOME/Downloads"
 BASE_URL="https://archive.chirpmyradio.com/chirp_next"
 USER_AGENT="Mozilla/5.0 (X11; Linux x86_64)"
