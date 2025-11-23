@@ -35,7 +35,7 @@ Just answer **y** when asked – everything will be set up automatically!
 
 ```bash
 # 1. Download the script
-curl -L -o chirp-update.sh https://github.com/DennisDeKoster/CHIRP_Linux_update_script/blob/main/chirp-update.sh
+curl -L -o chirp-update.sh "https://raw.githubusercontent.com/DennisDeKoster/CHIRP_Linux_update_script/3112de6d3369121f64b7ea43a4be9dbddb6b9f52/chirp-update.sh"
 
 # 2. Make it executable
 chmod +x chirp-update.sh
