@@ -7,43 +7,43 @@
 # --------------------------------------------------
 # Check for pipx and offer to install it if missing
 # --------------------------------------------------
+#!/bin/bash
+# CHIRP Auto-Update Script - pipx check (schoon en getest)
+
+# Check if pipx is available
 if ! command -v pipx >/dev/null 2>&1; then
-    echo "❌ pipx not found – this script needs pipx to install/upgrade CHIRP."
+    echo "pipx not found – this script needs pipx to manage CHIRP."
     echo
-    echo "pipx is the recommended way to install Python applications in isolation."
+    echo "pipx keeps Python apps like CHIRP nicely isolated."
     echo
-    read -p "Do you want to install pipx automatically? (y/N): " -n 1 -r REPLY
+    read -p "Install pipx automatically? (y/N): " -n 1 -r reply
     echo
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
+    if [[ $reply =~ ^[Yy]$ ]]; then
         echo "Installing pipx..."
         if command -v apt-get >/dev/null 2>&1; then
-            sudo apt-get update && sudo apt-get install -y pipx
+            sudo apt update && sudo apt install -y pipx
         elif command -v dnf >/dev/null 2>&1; then
             sudo dnf install -y pipx
         elif command -v pacman >/dev/null 2>&1; then
-            sudo pacman -Sy --noconfirm pipx
+            sudo pacman -Syu --noconfirm pipx
         elif command -v zypper >/dev/null 2>&1; then
             sudo zypper install -y pipx
         else
-            echo "Unsupported package manager. Please install pipx manually:"
-            echo "    python3 -m pip install --user pipx"
-            echo "    python3 -m pipx ensurepath"
+            echo "Unsupported package manager."
+            echo "Install manually with:"
+            echo "python3 -m pip install --user pipx"
+            echo "python3 -m pipx ensurepath"
             exit 1
         fi
-
-        # Ensure pipx is in PATH for the current session
         export PATH="$HOME/.local/bin:$PATH"
-        echo "pipx installed successfully!"
-        echo
+        echo "pipx installed!"
     else
         echo "pipx is required. Aborting."
-        echo "Install it manually with:"
-        echo "    python3 -m pip install --user pipx"
-        echo "    python3 -m pipx ensurepath"
         exit 1
     fi
 fi
-# Ensure pipx binaries are in PATH (very important for fresh installs)
+
+# Ensure pipx is in PATH for this session
 export PATH="$HOME/.local/bin:$PATH"
 
 DOWNLOAD_DIR="$HOME/Downloads"
