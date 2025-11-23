@@ -25,6 +25,12 @@ Perfect for Linux users who want to stay on the bleeding edge without manual che
 Optional (for nice trash behavior on GNOME-based desktops):
 - `gio` (part of `glib` – usually already installed)
 
+## First-time setup
+
+The first time you run the script, it will automatically detect if `pipx` is missing and offer to install it for you (on Ubuntu, Debian, Fedora, Arch, openSUSE, etc.).
+
+Just answer **y** when asked – everything will be set up automatically!
+
 ## Installation
 
 ```bash
