@@ -105,7 +105,7 @@ if [[ "$CURRENT_DATE" == "$REMOTE_DATE" ]]; then
     exit 0
 fi
 echo "☝  Update available! ☝"
-echo "From $CURRENT_DATE to $REMOTE_DATE"
+echo "From next-$CURRENT_DATE to next-$REMOTE_DATE"
 echo
 # --------------------------------------------------
 # 5. Downloading
@@ -133,7 +133,7 @@ echo "Installing new version..."
 pipx install --system-site-packages "$LOCAL_WHL"
 if [[ $? -eq 0 ]]; then
     echo
-    echo "✅ CHIRP succesfully updated to $REMOTE_VERSION!"
+    echo "✅ CHIRP succesfully updated to next-$REMOTE_DATE!"
     echo
     # Cleanup
     if command -v gio >/dev/null 2>&1; then
